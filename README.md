@@ -30,49 +30,6 @@ This adds a `config/initializers/markdown.rb` file and a few Markdown parser sta
 
 Now add views or partials ending in `.md` or `.markdown` in your `./app/views/**/**` directories!
 
-## Examples
-
-Your best bet is to use this with a content management site like https://sitepress.cc/ if you're going to be dealing with a lot of markdown content on your website.
-
-### Static View
-
-In `app/views/home/about.html.md`:
-
-```markdown
-# About This Site
-
-*Markdown code goes here ...*
-```
-
-Keep in mind that unlike static files dropped in `public`, you still need a
-matching route, such as `get ':action', :controller => :home`, to route
-`/about` to `home#about`.
-
-### Static Partial
-
-In `app/views/posts/edit.html.erb`:
-
-```erb
-<form>... dynamic code goes here ...</form>
-<div class="help">
-  <%= render :partial => "posts/edit_help" %>
-</div>
-```
-
-In `app/views/posts/_edit_help.html.md`:
-
-```markdown
-## How To Edit
-
-This text is written in **Markdown**. :-)
-```
-
-Note: If you are including Markdown partials from a Haml view, `<pre>` blocks
-inside your Markdown may be indented when Haml is not in ["ugly" (production)
-mode](http://haml-lang.com/docs/yardoc/file.HAML_REFERENCE.html#ugly-option),
-causing leading white-space to appear in development mode. To fix this, set
-`Haml::Template.options[:ugly] = true`.
-
 ## Configuration
 
 Applications commonly need various markdown variants within one application. For example,
@@ -128,6 +85,48 @@ class ApplicationMarkdown < RailsMarkdown
     end
 end
 ```
+
+## Examples
+
+Your best bet is to use this with a content management site like https://sitepress.cc/ if you're going to be dealing with a lot of markdown content on your website.
+
+### Static View
+
+In `app/views/home/about.html.md`:
+
+```markdown
+# About This Site
+
+*Markdown code goes here ...*
+```
+
+Keep in mind that unlike static files dropped in `public`, you still need a matching route, such as `get ':action', :controller => :home`, to route `/about` to `home#about`. You could also [use Sitepress](https://sitepress.cc) to automatically manage these routes for you if you're dealing with a lot of pages.
+
+### Static Partial
+
+In `app/views/posts/edit.html.erb`:
+
+```erb
+<form>... dynamic code goes here ...</form>
+<div class="help">
+  <%= render :partial => "posts/edit_help" %>
+</div>
+```
+
+In `app/views/posts/_edit_help.html.md`:
+
+```markdown
+## How To Edit
+
+This text is written in **Markdown**. :-)
+```
+
+Note: If you are including Markdown partials from a Haml view, `<pre>` blocks
+inside your Markdown may be indented when Haml is not in ["ugly" (production)
+mode](http://haml-lang.com/docs/yardoc/file.HAML_REFERENCE.html#ugly-option),
+causing leading white-space to appear in development mode. To fix this, set
+`Haml::Template.options[:ugly] = true`.
+
 
 ## Security
 

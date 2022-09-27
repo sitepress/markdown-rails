@@ -1,26 +1,28 @@
-**For a perhaps better solution for .html.md files that also supports
-embedding Erb in your Markdown, check out @wjbuys's [answer on
-Stackoverflow](http://stackoverflow.com/a/10131299/525872).**
-
-------------------------
-
 # markdown-rails
 
-This gem allows you to write static Rails views and partials using the
-[Markdown](http://daringfireball.net/projects/markdown/syntax) syntax. No more
-editing prose in HTML!
+This gem allows you to write static Rails views and partials using the [Markdown](http://daringfireball.net/projects/markdown/syntax) syntax. No more editing prose in HTML!
 
 ## Usage
 
 Add the following to your Gemfile:
 
-```ruby
-gem 'markdown-rails'
+```sh
+bundle add 'markdown-rails'
 ```
 
-Now add views or partials ending in `.md` or `.markdown`.
+Then from the root of your Rails project, run:
+
+```sh
+bin/rails g markdown:install
+```
+
+This command adds a `config/initializers/markdown.rb` file and a few Markdown parser stacks to `./app/markdown` that you can customize.
+
+Now add views or partials ending in `.md` or `.markdown` in your `./app/views/**/**` directories!
 
 ## Examples
+
+Your best bet is to use this with a content management site like https://sitepress.cc/ if you're going to be dealing with a lot of markdown content on your website.
 
 ### Static View
 
@@ -63,60 +65,58 @@ causing leading white-space to appear in development mode. To fix this, set
 
 ## Configuration
 
-By default markdown-rails uses the
-[RDiscount](https://github.com/rtomayko/rdiscount) parser. You can change this
-by calling `config.render` like so:
+Applications commonly need various markdown variants within one application. For example,
+
 
 ```ruby
-MarkdownRails.configure do |config|
-  config.render do |markdown_source|
-    # Return compiled HTML here ...
-  end
+# Restart your server after making changes to these files.
+
+# Renders markdown without Erb, which is safe for user inputs
+# unless you have some crazy unsafe blocks in the `ApplicationMarkdown` stack.
+MarkdownRails::Handler.register :md do
+  ApplicationMarkdown.new
+end
+
+# Use Erb in markdown templates, which is NOT safe for untrusted inputs
+# like blog post from a user. You should only use this for content that
+# you trust won't execute arbitrary Ruby code like views and templates in
+# your repo.
+MarkdownRails::ErbHandler.register :markerb do
+  ApplicationMarkdown.new
 end
 ```
 
-You might in particular want to use
-[Redcarpet](https://github.com/tanoku/redcarpet), which allows you to enable
-various aspects of [GitHub Flavored
-Markdown](http://github.github.com/github-flavored-markdown/) through its
-parser options. To do so, add the `redcarpet` gem to your Gemfile, and add the
-following into a `config/initializers/markdown.rb` file:
+You might want to customize your Markdown handlers to do things like syntax code highlighting, etc. Here's what that looks like:
 
 ```ruby
-MarkdownRails.configure do |config|
-  markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML,
-    :fenced_code_blocks => true,
-    :autolink => true,
-    ... etc ...)
-  config.render do |markdown_source|
-    markdown.render(markdown_source)
+class ApplicationMarkdown < RailsMarkdown
+  include Redcarpet::Render::SmartyPants
+
+  def enable
+    [:fenced_code_blocks]
   end
+
+  def block_code(code, language)
+    render Views::CodeBlock.new(code, syntax: language)
+  end
+
+  def image(link, title, alt)
+    url = URI(link)
+    case url.host
+    when "www.youtube.com"
+      render Views::YoutubeEmbed.new(url)
+    else
+      super
+    end
+  end
+
+  private
+    def render(component)
+      component.call
+    end
 end
 ```
 
 ## Security
 
-Despite Markdown being a static language, you should not use this gem to
-process untrusted Markdown views (or partials). In other words, do not add
-Markdown views from a source if you wouldn't trust Erb views from them.
-
-## Limitations
-
-*   It's not possible to embed Ruby code in the Markdown code. Unfortunately,
-    you cannot simply chain template handlers (`.md.erb`) like you can with
-    asset handlers. This is reasonable if you consider that unlike assets,
-    templates are precompiled not into strings but into Ruby code, which is
-    then called every time the template is served. Still, the performance of
-    modern Markdown parsers is good enough that you could afford to reparse the
-    Markdown on every template view, so having Markdown with Erb in it should
-    be possible in principle.
-
-    In the meantime, you can [use HAML's :markdown
-    filter](http://stackoverflow.com/a/4418389/525872) to the same effect.
-
-*   The only truly Markdown-specific code in the source is
-    `RDiscount.new(markdown_source).to_html` and the `.md`/`.markdown` file
-    name extensions. This gem can and should be generalized into a
-    general-purpose static template gem, so that you can easily use other
-    static templating languages in Rails. Perhaps
-    [tilt](https://github.com/rtomayko/tilt) will come in useful.
+Despite Markdown being a static language, you should not use this gem to process untrusted Markdown views (or partials). In other words, do not add Markdown views from a source if you wouldn't trust Erb views from them.

@@ -2,6 +2,16 @@
 
 This gem allows you to write static Rails views and partials using the [Markdown](http://daringfireball.net/projects/markdown/syntax) syntax. No more editing prose in HTML!
 
+It is a comprehensive Markdown library for Rails that addresses the following pain points:
+
+* Renders markdown files and partials that you can throw in your Rails view paths, like `./app/views/people/profile.html.md`.
+* Parse Erb blocks in markdown files.
+* Customize markdown tags like `![]()` to support embeds beyond images like YouTube links, code fences for syntax highlighting, etc.
+* Plug into Rails asset pipeline so images defined in Markdown will be loaded from the forever-cached image assets.
+* Define multiple markdown renders so you can render more dangerous-user upload markdown content vs markdown that you can trust, like content files checked into your Rails project.
+
+This project is used heavily by https://sitepress.cc to manage content files in Rails, but it can be used on its own for Rails views.
+
 ## Usage
 
 Add the following to your application's Gemfile:

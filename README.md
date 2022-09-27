@@ -4,19 +4,19 @@ This gem allows you to write static Rails views and partials using the [Markdown
 
 ## Usage
 
-Add the following to your Gemfile:
+Add the following to your application's Gemfile:
 
 ```sh
-bundle add 'markdown-rails'
+$ bundle add 'markdown-rails'
 ```
 
 Then from the root of your Rails project, run:
 
 ```sh
-bin/rails g markdown:install
+$ bin/rails g markdown:install
 ```
 
-This command adds a `config/initializers/markdown.rb` file and a few Markdown parser stacks to `./app/markdown` that you can customize.
+This adds a `config/initializers/markdown.rb` file and a few Markdown parser stacks to `./app/markdown` that you can customize.
 
 Now add views or partials ending in `.md` or `.markdown` in your `./app/views/**/**` directories!
 
@@ -69,6 +69,7 @@ Applications commonly need various markdown variants within one application. For
 
 
 ```ruby
+# ./config/initializers/markdown.rb
 # Restart your server after making changes to these files.
 
 # Renders markdown without Erb, which is safe for user inputs
@@ -89,6 +90,7 @@ end
 You might want to customize your Markdown handlers to do things like syntax code highlighting, etc. Here's what that looks like:
 
 ```ruby
+# ./app/markdown/application_markdown.rb
 class ApplicationMarkdown < RailsMarkdown
   include Redcarpet::Render::SmartyPants
 

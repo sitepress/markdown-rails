@@ -1,5 +1,8 @@
 # markdown-rails
 
+> **Note**
+> **Everything below will be implemented in 2.0.0.alpha1, which is not yet released.** This was written to get feedback about the Dev UX of this gem as the proof-of-concept is brought over from https://github.com/bradgessler/view-playground.
+
 This gem allows you to write static Rails views and partials using the [Markdown](http://daringfireball.net/projects/markdown/syntax) syntax. No more editing prose in HTML!
 
 It is a comprehensive Markdown library for Rails that addresses the following pain points:

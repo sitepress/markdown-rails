@@ -1,21 +1,27 @@
-# -*- encoding: utf-8 -*-
-require File.expand_path('../lib/markdown-rails/version', __FILE__)
+require_relative "lib/markdown/rails/version"
 
-Gem::Specification.new do |s|
-  s.name        = "markdown-rails"
-  s.version     = MarkdownRails::VERSION
-  s.authors     = ["Jo Liss"]
-  s.email       = ["joliss42@gmail.com"]
-  s.homepage    = "https://github.com/joliss/markdown-rails"
-  s.summary     = "Markdown as a Rails templating language"
-  s.description = "Markdown as a static templating language for Rails views and partials"
+Gem::Specification.new do |spec|
+  spec.name        = "markdown-rails"
+  spec.version     = Markdown::Rails::VERSION
+  spec.authors     = ["Brad Gessler"]
+  spec.email       = ["bradgessler@gmail.com"]
+  spec.homepage    = "https://github.com/sitepress/markdown-rails"
+  spec.summary     = "Markdown templates and partials in Rails."
+  spec.description = "Markdown Rails is a comprehensive stack for rendering Markdown templates and partials in Rails."
+  spec.license     = "MIT"
+  
+  # Prevent pushing this gem to RubyGems.org. To allow pushes either set the "allowed_push_host"
+  # to allow pushing to a single host or delete this section to allow pushing to any host.
+  spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
 
-  s.required_rubygems_version = ">= 1.3.6"
+  spec.metadata["homepage_uri"] = spec.homepage
+  spec.metadata["source_code_uri"] = spec.homepage
+  spec.metadata["changelog_uri"] = spec.homepage
 
-  s.add_dependency "rails"
-  s.add_dependency "rdiscount", ">= 1.6.8"
+  spec.files = Dir.chdir(File.expand_path(__dir__)) do
+    Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
+  end
 
-  s.files        = `git ls-files`.split("\n").reject { |f| f =~ /^testapp/ }
-  s.executables  = `git ls-files -- bin/*`.split("\n").map { |f| File.basename(f) }
-  s.require_path = 'lib'
+  spec.add_dependency "rails", ">= 7.0.4"
+  spec.add_dependency "redcarpet", ">= 3.0.0"
 end

@@ -1,10 +1,10 @@
 module Markdown
   module Rails
-    module Renderers
+    module Renderer
       class Base < Redcarpet::Render::HTML
         def enable
           # This is a very restrictive Markdown renderer that errs on the side of safety.
-          # For more details read the docs at https://github.com/vmg/redcarpet#darling-i-packed-you-a-couple-renderers-for-lunch
+          # For more details read the docs at https://github.com/vmg/redcarpet#darling-i-packed-you-a-couple-renderer-for-lunch
           [
             :filter_html,
             :no_images,

@@ -1,6 +1,6 @@
 module Markdown
   module Rails
-    module Renderers
+    module Renderer
       class Rails < Base
         include ::Rails.application.routes.url_helpers
 

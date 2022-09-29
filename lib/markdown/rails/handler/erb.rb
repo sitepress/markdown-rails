@@ -1,6 +1,6 @@
 module Markdown
   module Rails
-    module Handlers
+    module Handler
       class Erb < Markdown
         def call(template, source = template.source)
           compiled_source = compile_erb template, source

@@ -1,6 +1,6 @@
 module Markdown
   module Rails
-    module Handlers
+    module Handler
       # We cannot use Markdown::Rails because it conflicts with RDiscount's Markdown class
       class Markdown
         def initialize(&block)

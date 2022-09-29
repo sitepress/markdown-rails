@@ -29,7 +29,7 @@ Then from the root of your Rails project, run:
 $ bin/rails g markdown:install
 ```
 
-This adds a `config/initializers/markdown.rb` file where you can register template handlers for your Markdown renders that are located in `./app/markdown/*.rb`.
+This adds a `config/initializers/markdown.rb` file where you can register template handler for your Markdown renders that are located in `./app/markdown/*.rb`.
 
 Now add views or partials ending in `.md` in your `./app/views/**/**` directories and behold!
 
@@ -57,7 +57,7 @@ Applications commonly need various markdown variants within one application. For
 # ./config/initializers/markdown.rb
 # Restart the server to see changes made to this file.
 
-# Setup markdown stacks to work with different template handlers in Rails.
+# Setup markdown stacks to work with different template handler in Rails.
 Markdown::Rails.handle :md do
   ApplicationMarkdown.new
 end
@@ -71,11 +71,11 @@ end
 
 Only enable Erb in Markdown if you trust the source of the file. Do not enable it for markdown provided by users or they will be able to execute arbitrary Ruby code.
 
-To enable Erb, you can tell Rails to render all view files ending with `.markerb` using the `Markdown::Rails::Handlers::Erb` handler.
+To enable Erb, you can tell Rails to render all view files ending with `.markerb` using the `Markdown::Rails::Handler::Erb` handler.
 
 ```ruby
 # ./config/initializers/markdown.rb
-Markdown::Rails.handle :markerb, with: Markdown::Rails::Handlers::Erb do
+Markdown::Rails.handle :markerb, with: Markdown::Rails::Handler::Erb do
   ApplicationMarkdown.new
 end
 ```
@@ -86,19 +86,19 @@ You *could* change `:markerb` to `:md`, but I don't recommend it for all Markdow
 # ./config/initializers/markdown.rb
 # Restart the server to see changes made to this file.
 
-# Setup markdown stacks to work with different template handlers in Rails.
+# Setup markdown stacks to work with different template handler in Rails.
 Markdown::Rails.handle :md do
   ApplicationMarkdown.new
 end
 
-Markdown::Rails.handle :markerb, with: Markdown::Rails::Handlers::Erb do
+Markdown::Rails.handle :markerb, with: Markdown::Rails::Handler::Erb do
   ApplicationMarkdown.new
 end
 ```
 
-## Customizing renderers
+## Customizing renderer
 
-You might want to customize your Markdown handlers to do things like syntax code highlighting, etc.
+You might want to customize your Markdown handler to do things like syntax code highlighting, etc.
 
 ```ruby
 # ./app/markdown/application_markdown.rb

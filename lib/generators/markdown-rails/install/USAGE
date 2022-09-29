@@ -1,0 +1,9 @@
+Description:
+    Installs MarkdownRails to your Rails project
+
+Example:
+    bin/rails generate markdown_rails:install
+
+    This will create:
+        config/initializers/markdown.rb
+        app/markdown/application_markdown.rb

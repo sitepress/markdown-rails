@@ -26,7 +26,7 @@ $ bundle add 'markdown-rails'
 Then from the root of your Rails project, run:
 
 ```sh
-$ bin/rails g markdown:install
+$ bin/rails g markdown_rails:install
 ```
 
 This adds a `config/initializers/markdown.rb` file where you can register template handler for your Markdown renders that are located in `./app/markdown/*.rb`.
@@ -44,7 +44,7 @@ gem "markdown-rails", "~> 2.0.0"
 Then from the root of your Rails project, run:
 
 ```sh
-$ bin/rails g markdown:install
+$ bin/rails g markdown_rails:install
 ```
 
 If you have an existing file in `config/initializers/markdown.rb` you'll need to move those settings over. Note that 1.x used `RDiscount` as the default renderer, which was replaced by `Redcarpet` in 2.x.

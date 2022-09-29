@@ -40,7 +40,7 @@ class ApplicationMarkdown < Markdown::Rails::Renderers::Rails
     url = URI(link)
     case url.host
     when "www.youtube.com"
-      youtube_tag url
+      youtube_tag url, alt
     else
       super
     end
@@ -48,13 +48,14 @@ class ApplicationMarkdown < Markdown::Rails::Renderers::Rails
 
   private
     # This is provided as an example; there's many more YouTube URLs that this wouldn't catch.
-    def youtube_tag(url)
+    def youtube_tag(url, alt)
       embed_url = "https://www.youtube-nocookie.com/embed/#{CGI.parse(url.query).fetch("v").first}"
-      tag :iframe,
+      content_tag :iframe,
+        src: embed_url,
         width: 560,
         height: 325,
-        src: embed_url,
         allow: "encrypted-media; picture-in-picture",
-        allowfullscreen: true
+        allowfullscreen: true \
+          do alt end
     end
 end

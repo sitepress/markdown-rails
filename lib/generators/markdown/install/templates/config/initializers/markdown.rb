@@ -8,10 +8,6 @@ end
 # Don't use Erb for untrusted markdown content created by users; otherwise they
 # can execute arbitrary code on your server. This should only be used for input you
 # trust, like content files from your code repo.
-#
-# Make sure you know what you're doing before you uncomment the block below to get
-# Erb working with Markdown.
-
-# Markdown::Rails.handle :markerb, with: Markdown::Rails::Handlers::Erb do
-#   ApplicationMarkdown.new
-# end
+Markdown::Rails.handle :markerb, with: Markdown::Rails::Handlers::Erb do
+  ApplicationMarkdown.new
+end

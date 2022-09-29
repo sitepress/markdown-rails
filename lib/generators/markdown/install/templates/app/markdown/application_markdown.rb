@@ -50,7 +50,7 @@ class ApplicationMarkdown < Markdown::Rails::Renderers::Rails
       tag :iframe,
         width: 560,
         height: 325,
-        src: embed_url
+        src: embed_url,
         allow: "encrypted-media; picture-in-picture",
         allowfullscreen: true
     end

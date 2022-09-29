@@ -1,6 +1,4 @@
-module Markdown
-  module Rails
-    class Engine < ::Rails::Engine
-    end
+module MarkdownRails
+  class Engine < ::Rails::Engine
   end
 end

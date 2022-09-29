@@ -2,7 +2,7 @@ require_relative "lib/markdown/rails/version"
 
 Gem::Specification.new do |spec|
   spec.name        = "markdown-rails"
-  spec.version     = Markdown::Rails::VERSION
+  spec.version     = MarkdownRails::VERSION
   spec.authors     = ["Brad Gessler"]
   spec.email       = ["bradgessler@gmail.com"]
   spec.homepage    = "https://github.com/sitepress/markdown-rails"

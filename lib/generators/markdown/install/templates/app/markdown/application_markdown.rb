@@ -1,13 +1,13 @@
 # You should read the docs at https://github.com/vmg/redcarpet and probably
 # delete a bunch of stuff below if you don't need it.
 
-class ApplicationMarkdown < Markdown::Rails::Renderer::Rails
+class ApplicationMarkdown < MarkdownRails::Renderer::Rails
   # Reformats your boring punctation like " and " into “ and ” so you can look
   # and feel smarter. Read the docs at https://github.com/vmg/redcarpet#also-now-our-pants-are-much-smarter
   include Redcarpet::Render::SmartyPants
 
   # If you need access to ActionController::Base.helpers, you can delegate by uncommenting
-  # and adding to the list below. Several are already included for you in the `Markdown::Rails::Renderer::Rails`,
+  # and adding to the list below. Several are already included for you in the `MarkdownRails::Renderer::Rails`,
   # but you can add more here.
   #
   # To see a list of methods available run `bin/rails runner "puts ActionController::Base.helpers.public_methods.sort"`

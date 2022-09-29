@@ -58,11 +58,11 @@ Applications commonly need various markdown variants within one application. For
 # Restart the server to see changes made to this file.
 
 # Setup markdown stacks to work with different template handler in Rails.
-Markdown::Rails.handle :md do
+MarkdownRails.handle :md do
   ApplicationMarkdown.new
 end
 
-Markdown::Rails.handle :crazymd do
+MarkdownRails.handle :crazymd do
   MyCrazyMarkdown.new
 end
 ```
@@ -71,11 +71,11 @@ end
 
 Only enable Erb in Markdown if you trust the source of the file. Do not enable it for markdown provided by users or they will be able to execute arbitrary Ruby code.
 
-To enable Erb, you can tell Rails to render all view files ending with `.markerb` using the `Markdown::Rails::Handler::Erb` handler.
+To enable Erb, you can tell Rails to render all view files ending with `.markerb` using the `MarkdownRails::Handler::Erb` handler.
 
 ```ruby
 # ./config/initializers/markdown.rb
-Markdown::Rails.handle :markerb, with: Markdown::Rails::Handler::Erb do
+MarkdownRails.handle :markerb, with: MarkdownRails::Handler::Erb do
   ApplicationMarkdown.new
 end
 ```
@@ -87,11 +87,11 @@ You *could* change `:markerb` to `:md`, but I don't recommend it for all Markdow
 # Restart the server to see changes made to this file.
 
 # Setup markdown stacks to work with different template handler in Rails.
-Markdown::Rails.handle :md do
+MarkdownRails.handle :md do
   ApplicationMarkdown.new
 end
 
-Markdown::Rails.handle :markerb, with: Markdown::Rails::Handler::Erb do
+MarkdownRails.handle :markerb, with: MarkdownRails::Handler::Erb do
   ApplicationMarkdown.new
 end
 ```

@@ -1,7 +1,7 @@
 require "test_helper"
 
-class Markdown::RailsTest < ActiveSupport::TestCase
+class MarkdownRailsTest < ActiveSupport::TestCase
   test "it has a version number" do
-    assert Markdown::Rails::VERSION
+    assert MarkdownRails::VERSION
   end
 end

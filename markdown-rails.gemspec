@@ -1,4 +1,4 @@
-require_relative "lib/markdown/rails/version"
+require_relative "lib/markdown-rails/version"
 
 Gem::Specification.new do |spec|
   spec.name        = "markdown-rails"

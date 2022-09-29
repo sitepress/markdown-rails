@@ -25,6 +25,7 @@ module Markdown
           :request,
           :turbo_frame_tag,
           :controller,
+          :raw,
         to: :helpers
 
         def image(link, title, alt)

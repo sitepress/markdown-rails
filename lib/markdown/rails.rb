@@ -3,8 +3,8 @@ require "markdown/rails/engine"
 
 module Markdown
   module Rails
-    def self.handle(extensions, with: Handlers::Markdown, &block)
-      with.handle extensions, &block
+    def self.handle(*extensions, with: Handlers::Markdown, &block)
+      with.handle *extensions, &block
     end
 
     module Handlers

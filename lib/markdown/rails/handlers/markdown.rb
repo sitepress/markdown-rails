@@ -3,7 +3,7 @@ module Markdown
     module Handlers
       # We cannot use Markdown::Rails because it conflicts with RDiscount's Markdown class
       class Markdown
-        def initialize(extensions:, &block)
+        def initialize(&block)
           @markdown = block
         end
 
@@ -13,7 +13,7 @@ module Markdown
 
         def self.handle(*extensions, &block)
           Array(extensions).each do |extension|
-            handler = new extensions: extensions, &block
+            handler = new &block
             ActionView::Template.register_template_handler extension, handler
           end
         end

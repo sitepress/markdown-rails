@@ -12,6 +12,6 @@ end
 # Make sure you know what you're doing before you uncomment the block below to get
 # Erb working with Markdown.
 
-# Markdown::Rails.handle :md, :markdown, handler: Markdown::Rails::Handlers::Erb do
+# Markdown::Rails.handle :markerb, with: Markdown::Rails::Handlers::Erb do
 #   ApplicationMarkdown.new
 # end

@@ -9,6 +9,9 @@ class ApplicationMarkdown < Markdown::Rails::Renderers::Rails
   # If you need access to ActionController::Base.helpers, you can delegate by uncommenting
   # and adding to the list below. Several are already included for you in the `Markdown::Rails::Renderers::Rails`,
   # but you can add more here.
+  #
+  # To see a list of methods available run `bin/rails runner "puts ActionController::Base.helpers.public_methods.sort"`
+  #
   # delegate \
   #   :request,
   #   :cache,

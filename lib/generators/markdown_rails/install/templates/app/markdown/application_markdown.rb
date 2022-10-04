@@ -6,6 +6,9 @@ class ApplicationMarkdown < MarkdownRails::Renderer::Rails
   # and feel smarter. Read the docs at https://github.com/vmg/redcarpet#also-now-our-pants-are-much-smarter
   include Redcarpet::Render::SmartyPants
 
+  # Uncomment and run `bundle add rouge` for syntax highlighting
+  # include MarkdownRails::Helper::Rouge
+
   # If you need access to ActionController::Base.helpers, you can delegate by uncommenting
   # and adding to the list below. Several are already included for you in the `MarkdownRails::Renderer::Rails`,
   # but you can add more here.

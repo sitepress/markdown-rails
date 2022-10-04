@@ -1,3 +1,5 @@
+require "redcarpet"
+
 module MarkdownRails
   module Renderer
     class Base < Redcarpet::Render::HTML

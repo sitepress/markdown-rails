@@ -15,4 +15,8 @@ module MarkdownRails
     autoload :Base,       "markdown-rails/renderer/base"
     autoload :Rails,      "markdown-rails/renderer/rails"
   end
+
+  module Helper
+    autoload :Rouge,      "markdown-rails/helper/rouge"
+  end
 end

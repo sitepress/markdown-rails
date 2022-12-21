@@ -58,12 +58,9 @@ Applications commonly need various markdown variants within one application. For
 # Restart the server to see changes made to this file.
 
 # Setup markdown stacks to work with different template handler in Rails.
-MarkdownRails.handle :md do
-  ApplicationMarkdown.new
-end
-
-MarkdownRails.handle :crazymd do
-  MyCrazyMarkdown.new
+MarkdownRails.configure do |config|
+  config.handle :md, :markdown, with: ApplicationMarkdown
+  config.handle :smd, with: SafeMarkdown
 end
 ```
 
@@ -75,28 +72,20 @@ To enable Erb, you can tell Rails to render all view files ending with `.markerb
 
 ```ruby
 # ./config/initializers/markdown.rb
-MarkdownRails.handle :markerb, with: MarkdownRails::Handler::Erb do
-  ApplicationMarkdown.new
-end
-```
-
-You *could* change `:markerb` to `:md`, but I don't recommend it for all Markdown files or you'll run into problems if you have content like `<%= Time.current %>` inside of an `erb` codefence. You're better off having two configurations: one that handles Erb and another that doesn't, like this:
-
-```ruby
-# ./config/initializers/markdown.rb
 # Restart the server to see changes made to this file.
 
 # Setup markdown stacks to work with different template handler in Rails.
-MarkdownRails.handle :md do
-  ApplicationMarkdown.new
-end
-
-MarkdownRails.handle :markerb, with: MarkdownRails::Handler::Erb do
-  ApplicationMarkdown.new
+MarkdownRails.configure do |config|
+  config.handle :md, :markdown, with: ApplicationMarkdown
+  config.handle :smd, with: SafeMarkdown
+  # This is a bad idea for a few reasons, but sometimes its needed
+  config.handle :markerb, with: ApplicationMarkdown.erb
 end
 ```
 
-## Customizing renderer
+You *could* change `:markerb` to `:md`, but I don't recommend it for all Markdown files or you'll run into problems if you have content like `<%= Time.current %>` inside of an `erb` codefence. You're better off having two configurations: one that handles Erb and another that doesn't.
+
+## Customizing Markdown
 
 You might want to customize your Markdown handler to do things like syntax code highlighting, etc.
 

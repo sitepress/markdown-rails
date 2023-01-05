@@ -15,8 +15,8 @@ module MarkdownRails
         ]
       end
 
-      def renderer
-        ::Redcarpet::Markdown.new(self.class, **features)
+      def markdown_renderer
+        @markdown_renderer ||= ::Redcarpet::Markdown.new(self, **features)
       end
 
       private

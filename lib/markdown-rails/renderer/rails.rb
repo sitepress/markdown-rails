@@ -3,14 +3,18 @@ module MarkdownRails
     class Rails < Base
       include ::Rails.application.routes.url_helpers
 
+      def initialize(view:, **extensions)
+        super(extensions)
+        @view = view
+      end
+
+      # The Rails render sets the view, which we can use to delegate everything
+      # to from the renderer.
+      attr_reader :view
+
       # Rendering from Markdown is actually outside of the view
       # context, so we need to delegate render to the ApplicationController
       # render method that can render outside of the view context.
-      delegate \
-        :helpers,
-        :render,
-      to: :base_controller
-
       delegate \
         :asset_digest_path,
         :asset_path,
@@ -32,16 +36,13 @@ module MarkdownRails
         :turbo_frame_tag,
         :controller,
         :raw,
-      to: :helpers
+        :request,
+        :controller,
+      to: :view
 
       def image(link, title, alt)
         image_tag link, title: title, alt: alt
       end
-
-      protected
-        def base_controller
-          ::ApplicationController
-        end
     end
   end
 end

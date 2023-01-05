@@ -58,29 +58,24 @@ Applications commonly need various markdown variants within one application. For
 # Restart the server to see changes made to this file.
 
 # Setup markdown stacks to work with different template handler in Rails.
-MarkdownRails.configure do |config|
-  config.handle :md, :markdown, with: ApplicationMarkdown
-  config.handle :smd, with: SafeMarkdown
-end
+MarkdownRails.handle :md, :markdown, with: :ApplicationMarkdown
+MarkdownRails.handle :smd, with: :SafeMarkdown
 ```
 
 ### Enable Erb in Markdown
 
 Only enable Erb in Markdown if you trust the source of the file. Do not enable it for markdown provided by users or they will be able to execute arbitrary Ruby code.
 
-To enable Erb, you can tell Rails to render all view files ending with `.markerb` using the `MarkdownRails::Handler::Erb` handler.
+To enable Erb, you can tell Rails to render all view files ending with `.markerb` using the `ErbMarkdown` handler.
 
 ```ruby
 # ./config/initializers/markdown.rb
 # Restart the server to see changes made to this file.
 
 # Setup markdown stacks to work with different template handler in Rails.
-MarkdownRails.configure do |config|
-  config.handle :md, :markdown, with: ApplicationMarkdown
-  config.handle :smd, with: SafeMarkdown
-  # This is a bad idea for a few reasons, but sometimes its needed
-  config.handle :markerb, with: ApplicationMarkdown.erb
-end
+MarkdownRails.handle :md, :markdown, with: :ApplicationMarkdown
+# This is a bad idea for a few reasons, but sometimes its needed
+MarkdownRails.handle :markerb, with: :ErbMarkdown
 ```
 
 You *could* change `:markerb` to `:md`, but I don't recommend it for all Markdown files or you'll run into problems if you have content like `<%= Time.current %>` inside of an `erb` codefence. You're better off having two configurations: one that handles Erb and another that doesn't.

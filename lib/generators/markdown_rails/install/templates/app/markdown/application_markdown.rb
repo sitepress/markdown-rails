@@ -9,7 +9,7 @@ class ApplicationMarkdown < MarkdownRails::Renderer::Rails
   # Uncomment and run `bundle add rouge` for syntax highlighting
   # include MarkdownRails::Helper::Rouge
 
-  # If you need access to ActionController::Base.helpers, you can delegate by uncommenting
+  # If you need access to methods from the view context, you can delegate by uncommenting
   # and adding to the list below. Several are already included for you in the `MarkdownRails::Renderer::Rails`,
   # but you can add more here.
   #
@@ -19,7 +19,7 @@ class ApplicationMarkdown < MarkdownRails::Renderer::Rails
   #   :request,
   #   :cache,
   #   :turbo_frame_tag,
-  # to: :helpers
+  # to: :view
 
   # These flags control features in the Redcarpet renderer, which you can read
   # about at https://github.com/vmg/redcarpet#and-its-like-really-simple-to-use

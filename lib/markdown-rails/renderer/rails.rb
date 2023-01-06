@@ -3,8 +3,8 @@ module MarkdownRails
     class Rails < Base
       include ::Rails.application.routes.url_helpers
 
-      def initialize(view:, **extensions)
-        super(extensions)
+      def initialize(content:, view:)
+        super(content: content)
         @view = view
       end
 
@@ -30,12 +30,10 @@ module MarkdownRails
         :video_path,
         :video_tag,
         :video_url,
-        :tag,
         :content_tag,
         :request,
         :turbo_frame_tag,
         :controller,
-        :raw,
         :request,
         :controller,
       to: :view

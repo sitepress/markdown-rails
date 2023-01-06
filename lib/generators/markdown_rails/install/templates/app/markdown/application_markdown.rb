@@ -25,7 +25,7 @@ class ApplicationMarkdown < MarkdownRails::Renderer::Rails
   # about at https://github.com/vmg/redcarpet#and-its-like-really-simple-to-use
   # Make sure you know what you're doing if you're using this to render user inputs.
   def enable
-    [:fenced_code_blocks]
+    Markly::SMART | Markey::NO_BREAKS
   end
 
   # These methods are called as the Markdown document is parsed. Block-level calls are

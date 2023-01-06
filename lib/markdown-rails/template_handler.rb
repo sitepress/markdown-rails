@@ -6,10 +6,7 @@ module MarkdownRails
     end
 
     def call(template, source = template.source)
-      %[
-        markdown = #{@markdown.name}.new(view: self);
-        markdown.markdown_renderer.render(#{source.inspect}).html_safe;
-      ]
+      "#{@markdown.name}.new(content: #{source.inspect}, view: self).call.html_safe"
     end
   end
 end

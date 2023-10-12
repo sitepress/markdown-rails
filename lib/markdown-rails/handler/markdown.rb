@@ -4,8 +4,6 @@ module MarkdownRails
     class Markdown
       DEFAULT_EXTENSION = :md
 
-      class_attribute :default_extension, default: DEFAULT_EXTENSION
-
       def initialize(&block)
         @markdown = block
       end
@@ -21,12 +19,10 @@ module MarkdownRails
         end
       end
 
-      # Checks if a handler has been registered with Rails. If it has, then this does nothing. If it hasn't
-      # then this will register a default Rails markdown handler.
+      # Registers a default `.md` handler for Rails templates. This might be
+      # replaced by a handler in the `config/initializers/markdown.rb` file.
       def self.register_default_handler
-        if default_extension and ActionView::Template::Handlers.extensions.exclude? default_extension
-          handle(default_extension) { MarkdownRails::Renderer::Rails.new }
-        end
+        handle(DEFAULT_EXTENSION) { MarkdownRails::Renderer::Rails.new }
       end
 
       private

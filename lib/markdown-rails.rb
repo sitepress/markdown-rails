@@ -2,14 +2,11 @@ require "markdown-rails/version"
 require "markdown-rails/engine"
 
 module MarkdownRails
-  def self.handle(*extensions, with: Handler::Markdown, &block)
-    with.handle *extensions, &block
+  def self.handle(*extensions, &block)
+    Handler.handle(*extensions, &block)
   end
 
-  module Handler
-    autoload :Markdown,   "markdown-rails/handler/markdown"
-    autoload :Erb,        "markdown-rails/handler/erb"
-  end
+  autoload :Handler,   "markdown-rails/handler"
 
   module Renderer
     autoload :Base,       "markdown-rails/renderer/base"

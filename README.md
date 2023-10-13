@@ -68,12 +68,10 @@ end
 
 Only enable Erb in Markdown if you trust the source of the file. Do not enable it for markdown provided by users or they will be able to execute arbitrary Ruby code.
 
-To enable Erb, you can tell Rails to render all view files ending with `.markerb` using the `MarkdownRails::Handler::Erb` handler.
-
 ```ruby
 # ./config/initializers/markdown.rb
-MarkdownRails.handle :markerb, with: MarkdownRails::Handler::Erb do
-  ApplicationMarkdown.new
+MarkdownRails.handle :markerb do
+  ErbMarkdown.new
 end
 ```
 
@@ -88,10 +86,12 @@ MarkdownRails.handle :md do
   ApplicationMarkdown.new
 end
 
-MarkdownRails.handle :markerb, with: MarkdownRails::Handler::Erb do
-  ApplicationMarkdown.new
+MarkdownRails.handle :markerb do
+  ErbMarkdown.new
 end
 ```
+
+The same technique can be used for preprocessing Markdown with other handlers, like liquid.
 
 ## Customizing renderer
 

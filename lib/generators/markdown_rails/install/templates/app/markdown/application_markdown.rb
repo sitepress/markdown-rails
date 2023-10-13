@@ -6,7 +6,7 @@ class ApplicationMarkdown < MarkdownRails::Renderer::Rails
   # and feel smarter. Read the docs at https://github.com/vmg/redcarpet#also-now-our-pants-are-much-smarter
   include Redcarpet::Render::SmartyPants
 
-  # Uncomment and run `bundle add rouge` for syntax highlighting
+  # Run `bundle add rouge` and uncomment the include below for syntax highlighting
   # include MarkdownRails::Helper::Rouge
 
   # If you need access to ActionController::Base.helpers, you can delegate by uncommenting
@@ -26,16 +26,6 @@ class ApplicationMarkdown < MarkdownRails::Renderer::Rails
   # Make sure you know what you're doing if you're using this to render user inputs.
   def enable
     [:fenced_code_blocks]
-  end
-
-  # These methods are called as the Markdown document is parsed. Block-level calls are
-  # documented at https://github.com/vmg/redcarpet#block-level-calls and span level calls
-  # are documented at https://github.com/vmg/redcarpet#block-level-calls so feel free to
-  # add more as you see fit.
-  def block_code(code, language)
-    content_tag :pre, class: language do
-      code # You could implement syntax highlighting here with Rouge.
-    end
   end
 
   # Example of how you might override the images to show embeds, like a YouTube video.

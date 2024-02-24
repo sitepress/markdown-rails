@@ -3,19 +3,17 @@ require 'redcarpet'
 module MarkdownRails
   module Renderer
     class Base < Redcarpet::Render::HTML
-      def render_options
-        Renderer.configuration.render_options
-      end
+      def render_options; end
 
       def enable; end
 
       def renderer
-        ::Redcarpet::Markdown.new(self.class.new(**render_opts), **features)
+        ::Redcarpet::Markdown.new(self.class.new(**options), **features)
       end
 
       private
 
-      def render_opts
+      def options
         Hash[Array(render_options).map { |opt| [opt, true] }]
       end
 

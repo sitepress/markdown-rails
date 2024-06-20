@@ -16,7 +16,9 @@ module MarkdownRails
       end
 
       def renderer
-        ::Redcarpet::Markdown.new(self.class, **features)
+        # I can get away passing fatures into this class because they don't
+        # overlap and RedCarpet is happy accepting both.
+        ::Redcarpet::Markdown.new(self.class.new(**features), **features)
       end
 
       private

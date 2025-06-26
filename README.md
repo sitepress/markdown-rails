@@ -119,7 +119,7 @@ class ApplicationMarkdown < RailsMarkdown
 end
 ```
 
-Consider using a componet farmework, like [phlex](https://www.phlex.fun) to generate tags outside of the Rails view context.
+Consider using a componet framework, like [phlex](https://www.phlex.fun) to generate tags outside of the Rails view context.
 
 ## Examples
 

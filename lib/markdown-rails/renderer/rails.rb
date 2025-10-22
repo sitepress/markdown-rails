@@ -5,9 +5,9 @@ module MarkdownRails
 
       attr_reader :view_context
 
-      def initialize(view_context)
+      def initialize(view_context, **options)
         @view_context = view_context
-        super()
+        super(**options)
       end
 
       def image(link, title, alt)
@@ -50,6 +50,16 @@ module MarkdownRails
         :safe_join,
         :capture,
       to: :view_context
+
+      def renderer
+        # Override Base#renderer to pass view_context when creating the Redcarpet instance
+        ::Redcarpet::Markdown.new(self.class.new(view_context, **features), **features)
+      end
+
+      private
+        def features
+          Hash[Array(enable).map{ |feature| [ feature, true ] }]
+        end
     end
   end
 end

@@ -27,4 +27,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "actionview", rails_version
   spec.add_dependency "activesupport", rails_version
   spec.add_dependency "redcarpet", ">= 3.0.0"
+
+  spec.add_development_dependency "rspec-rails", "~> 6.0"
 end

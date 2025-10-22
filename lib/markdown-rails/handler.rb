@@ -2,17 +2,20 @@ module MarkdownRails
   # We cannot use MarkdownRails because it conflicts with RDiscount's Markdown class
   class Handler
     DEFAULT_EXTENSION = :md
+    @@handlers = {}
 
-    def initialize(&block)
+    def initialize(extension, &block)
+      @extension = extension
       @markdown = block
+      @@handlers[@extension] = self
     end
 
     def call(template, source = template.source)
-      # Generate code that fetches the handler instance and calls the block at render time
-      handler_object_id = self.object_id
+      # Generate code that fetches the handler and calls the block at render time
+      extension = @extension
       <<~RUBY
         begin
-          handler = ObjectSpace._id2ref(#{handler_object_id})
+          handler = MarkdownRails::Handler.handler_for(#{extension.inspect})
           renderer = handler.create_renderer
           renderer.view_context = self
           renderer.renderer.render(#{source.inspect}).html_safe
@@ -24,9 +27,13 @@ module MarkdownRails
       @markdown.call
     end
 
+    def self.handler_for(extension)
+      @@handlers[extension]
+    end
+
     def self.handle(*extensions, &block)
       Array(extensions).each do |extension|
-        handler = new(&block)
+        handler = new(extension, &block)
         ActionView::Template.register_template_handler extension, handler
       end
     end

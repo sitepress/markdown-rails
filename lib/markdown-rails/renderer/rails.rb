@@ -3,15 +3,23 @@ module MarkdownRails
     class Rails < Base
       include ::Rails.application.routes.url_helpers
 
-      # Rendering from Markdown is actually outside of the view
-      # context, so we need to delegate render to the ApplicationController
-      # render method that can render outside of the view context.
-      delegate \
-        :helpers,
-        :render,
-      to: :base_controller
+      attr_reader :view_context
 
+      def initialize(view_context)
+        @view_context = view_context
+        super()
+      end
+
+      def image(link, title, alt)
+        view_context.image_tag link, title: title, alt: alt
+      end
+
+      # Delegate common helper methods to the view_context
       delegate \
+        :render,
+        :link_to,
+        :button_to,
+        :mail_to,
         :asset_digest_path,
         :asset_path,
         :asset_url,
@@ -26,22 +34,17 @@ module MarkdownRails
         :video_path,
         :video_tag,
         :video_url,
+        :javascript_include_tag,
+        :stylesheet_link_tag,
         :tag,
         :content_tag,
         :request,
         :turbo_frame_tag,
         :controller,
         :raw,
-      to: :helpers
-
-      def image(link, title, alt)
-        image_tag link, title: title, alt: alt
-      end
-
-      protected
-        def base_controller
-          ::ApplicationController
-        end
+        :safe_join,
+        :capture,
+      to: :view_context
     end
   end
 end

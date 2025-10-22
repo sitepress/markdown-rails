@@ -9,17 +9,18 @@ class ApplicationMarkdown < MarkdownRails::Renderer::Rails
   # Run `bundle add rouge` and uncomment the include below for syntax highlighting
   # include MarkdownRails::Helper::Rouge
 
-  # If you need access to ActionController::Base.helpers, you can delegate by uncommenting
-  # and adding to the list below. Several are already included for you in the `MarkdownRails::Renderer::Rails`,
-  # but you can add more here.
+  # The renderer has access to the view_context, which provides access to:
+  # - View helpers (image_tag, link_to, content_tag, etc.)
+  # - Asset helpers (image_path, image_url, asset_path, etc.)
+  # - URL helpers (root_path, user_path, etc.)
   #
-  # To see a list of methods available run `bin/rails runner "puts ActionController::Base.helpers.public_methods.sort"`
+  # Many common helpers are already delegated. You can add more by uncommenting
+  # and extending the delegate list in your subclass:
   #
   # delegate \
-  #   :request,
-  #   :cache,
-  #   :turbo_frame_tag,
-  # to: :helpers
+  #   :current_user,
+  #   :some_custom_helper,
+  # to: :view_context
 
   # These flags control features in the Redcarpet renderer, which you can read
   # about at https://github.com/vmg/redcarpet#and-its-like-really-simple-to-use

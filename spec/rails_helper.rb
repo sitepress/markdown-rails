@@ -26,7 +26,7 @@ MarkdownRails.handle :md do
     def renderer_options
       {}
     end
-  end
+  end.new
 end
 
 class PagesController < ActionController::Base

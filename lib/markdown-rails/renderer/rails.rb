@@ -3,10 +3,9 @@ module MarkdownRails
     class Rails < Base
       include ::Rails.application.routes.url_helpers
 
-      attr_reader :view_context
+      attr_accessor :view_context
 
-      def initialize(view_context, **options)
-        @view_context = view_context
+      def initialize(**options)
         super(**options)
       end
 
@@ -52,8 +51,10 @@ module MarkdownRails
       to: :view_context
 
       def renderer
-        # Override Base#renderer to pass view_context when creating the Redcarpet instance
-        ::Redcarpet::Markdown.new(self.class.new(view_context, **features), **features)
+        # Override Base#renderer to pass view_context to the new instance
+        new_instance = self.class.new(**features)
+        new_instance.view_context = view_context
+        ::Redcarpet::Markdown.new(new_instance, **features)
       end
 
       private

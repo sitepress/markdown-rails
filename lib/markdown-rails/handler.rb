@@ -3,23 +3,45 @@ module MarkdownRails
   class Handler
     DEFAULT_EXTENSION = :md
 
-    def initialize(&block)
+    def initialize(class_name: nil, &block)
+      @class_name = class_name
       @markdown = block
     end
 
     def call(template, source = template.source)
-      <<~RUBY
-        begin
-          renderer_class = #{@markdown.call.inspect}
-          renderer = renderer_class.new(self)
-          renderer.renderer.render(#{source.inspect}).html_safe
-        end
-      RUBY
+      if @class_name
+        # Constantize at render time to support class reloading in development
+        <<~RUBY
+          begin
+            renderer_class = #{@class_name.to_s.inspect}.constantize
+            renderer = renderer_class.new(self)
+            renderer.renderer.render(#{source.inspect}).html_safe
+          end
+        RUBY
+      else
+        # Block-based approach
+        <<~RUBY
+          begin
+            renderer_class = #{@markdown.call.inspect}
+            
+            # Ensure we have a class, not an instance
+            if !renderer_class.is_a?(Class)
+              raise ArgumentError, "MarkdownRails.handle block must return a class, not an instance. Use `ApplicationMarkdown` instead of `ApplicationMarkdown.new`"
+            end
+            
+            renderer = renderer_class.new(self)
+            renderer.renderer.render(#{source.inspect}).html_safe
+          end
+        RUBY
+      end
     end
 
-    def self.handle(*extensions, &block)
+    def self.handle(*extensions, with: nil, &block)
+      raise ArgumentError, "Must provide either `with:` keyword argument or a block" if with.nil? && block.nil?
+      raise ArgumentError, "Cannot provide both `with:` keyword argument and a block" if with && block
+      
       Array(extensions).each do |extension|
-        handler = new(&block)
+        handler = with ? new(class_name: with) : new(&block)
         ActionView::Template.register_template_handler extension, handler
       end
     end

@@ -3,13 +3,6 @@ module MarkdownRails
     class Rails < Base
       include ::Rails.application.routes.url_helpers
 
-      include ActionView::Helpers::AssetTagHelper
-      include ActionView::Helpers::AssetUrlHelper
-      include ActionView::Helpers::TagHelper
-      include ActionView::Helpers::UrlHelper
-      include ActionView::Helpers::FormTagHelper
-      include ActionView::Helpers::TextHelper
-
       attr_reader :view_context
 
       def initialize(view_context)
@@ -18,30 +11,45 @@ module MarkdownRails
       end
 
       def image(link, title, alt)
-        image_tag link, title:, alt:
+        view_context.image_tag link, title: title, alt: alt
       end
 
-      # Delegate methods that need view context state.
-      # For custom helpers not in ApplicationHelper, access them via view_context:
+      # Delegate view helpers to view_context since they need view state.
+      # The view_context has all helpers properly configured with @output_buffer, etc.
+      # For custom helpers, access them via view_context:
       #   view_context.my_custom_helper
       # Or delegate them explicitly in your subclass:
       #   delegate :my_custom_helper, to: :view_context
       delegate \
         :render,
+        :link_to,
+        :button_to,
+        :mail_to,
+        :asset_digest_path,
+        :asset_path,
+        :asset_url,
+        :audio_path,
+        :audio_tag,
+        :audio_url,
+        :font_path,
+        :font_url,
+        :image_path,
+        :image_tag,
+        :image_url,
+        :video_path,
+        :video_tag,
+        :video_url,
+        :javascript_include_tag,
+        :stylesheet_link_tag,
+        :tag,
+        :content_tag,
         :request,
+        :turbo_frame_tag,
         :controller,
+        :raw,
+        :safe_join,
         :capture,
       to: :view_context
-
-      private
-        # These helpers need the view_context's controller and config
-        def controller
-          view_context.controller
-        end
-
-        def config
-          view_context.config
-        end
     end
   end
 end

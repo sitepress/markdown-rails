@@ -10,7 +10,11 @@ module MarkdownRails
       end
 
       def image(link, title, alt)
-        view_context.image_tag link, title: title, alt: alt
+        image_tag link, title: title, alt: alt
+      end
+
+      def view_context
+        @view_context ||= self.class.default_view_context
       end
 
       # Delegate view helpers to view_context since they need view state.
@@ -55,6 +59,10 @@ module MarkdownRails
         new_instance = self.class.new(**features)
         new_instance.view_context = view_context
         ::Redcarpet::Markdown.new(new_instance, **features)
+      end
+
+      def self.default_view_context
+        ::ApplicationController.new.view_context
       end
 
       private
